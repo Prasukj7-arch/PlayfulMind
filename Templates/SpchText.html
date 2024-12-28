@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continuous Speech-to-Text with Microphone Permission</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for full height and no empty space */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        #app {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-purple-600 to-pink-500 text-white font-sans">
+    <div id="app" class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold mb-6">Speech-to-Text with Microphone Permission</h1>
+        <div class="bg-white text-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg">
+            <button onclick="startRecognition()" class="bg-purple-800 hover:bg-purple-700 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 mb-4 w-full">Start Recognition</button>
+            <button onclick="stopRecognition()" class="bg-red-600 hover:bg-red-500 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 w-full">Stop Recognition</button>
+            <p id="result" class="mt-6 p-4 border border-gray-300 rounded-lg">Transcribed text will appear here...</p>
+        </div>
+    </div>
+
+    <script>
+        let recognition;
+
+        // Function to request microphone permission and start recognition
+        function startRecognition() {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert('Speech recognition is not supported in this browser.');
+                return;
+            }
+
+            // Initialize speech recognition
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = true;  // Show partial results while speaking
+            recognition.continuous = true;  // Keep listening until manually stopped
+            recognition.maxAlternatives = 1;
+
+            // When recognition starts
+            recognition.onstart = function() {
+                console.log('Speech recognition started.');
+                document.getElementById('result').textContent = 'Listening... Please speak.';
+            };
+
+            // Capture results when speech is recognized
+            recognition.onresult = function(event) {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                document.getElementById('result').textContent = 'You said: ' + transcript;
+            };
+
+            // Handle errors (e.g., no speech or microphone blocked)
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+                if (event.error === 'not-allowed') {
+                    alert('Microphone access is blocked. Please allow it in browser settings.');
+                } else if (event.error === 'no-speech') {
+                    alert('No speech detected. Please try speaking again.');
+                } else {
+                    alert('Error occurred: ' + event.error);
+                }
+            };
+
+            // When recognition stops
+            recognition.onend = function() {
+                console.log('Speech recognition ended.');
+                document.getElementById('result').textContent += '\nListening stopped.';
+            };
+
+            // Start recognition and prompt for microphone access
+            try {
+                navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
+                    recognition.start();
+                }).catch(function(err) {
+                    alert('Microphone access denied: ' + err.message);
+                });
+            } catch (e) {
+                alert('Error accessing microphone: ' + e.message);
+            }
+        }
+
+        // Function to stop recognition
+        function stopRecognition() {
+            if (recognition) {
+                recognition.stop();
+                console.log('Speech recognition stopped manually.');
+            }
+        }
+    </script>
+</body>
+</html>

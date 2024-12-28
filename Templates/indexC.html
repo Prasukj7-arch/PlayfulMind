@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Study Companion - C Programming</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body class="font-sans bg-white">
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-600 to-pink-500 p-4 text-white">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-lg font-bold">AI Study Companion - C Programming</h1>
+      <div>
+        <a href="profile.html" class="mr-4 hover:underline">Profile</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="container mx-auto mt-10 p-4">
+    <h1 class="text-4xl font-bold mb-6 text-center">C PROGRAMMING DASHBOARD</h1>
+    <p class="text-lg mb-6 text-center">Personalized study assistant to master C programming concepts. Level up your skills with interactive content and real-time feedback.</p>
+
+    <!-- C Programming Dashboard Section -->
+    <section class="bg-gray-100 p-6 rounded-lg shadow-md mb-6">
+      <h2 class="text-2xl font-bold mb-4 text-center">Learning Dashboard</h2>
+      <div class="text-center mb-6">
+        <i class="fas fa-code text-purple-800 text-5xl mb-4"></i>
+        <p>Track your progress and complete levels to earn points!</p>
+      </div>
+
+      <div class="flex justify-around mb-4 text-center">
+        <p class="font-bold">Points: <span id="points" class="text-purple-800">0</span></p>
+        <div class="relative pt-1 w-2/3">
+          <p>Progress:</p>
+          <div class="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
+            <div style="width:0%" id="progress-bar" class="bg-purple-800 shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level 1: C Programming Basics -->
+      <div id="level1" class="hidden bg-white p-4 rounded shadow-md mb-6">
+        <h3 class="text-xl font-bold mb-2">Level 1: C Programming Basics</h3>
+        <p class="mb-4">Complete the following tasks to earn 10 points and advance:</p>
+        <ul class="list-disc pl-5">
+          <li><a href="#" class="text-purple-800 hover:underline" onclick="playGame1()">Interactive Game on C Basics</a></li>
+          <li><a href="c_cheat_sheet.html" class="text-purple-800 hover:underline">Learn C Basics (Quick Overview)</a></li>
+          <li><a href="#" class="text-purple-800 hover:underline" onclick="generateCode1()">Generate Basic C Code</a></li>
+        </ul>
+      </div>
+
+      <!-- Additional Level Triggers -->
+      <div class="text-center">
+        <button class="bg-purple-800 text-white p-2 rounded hover:bg-purple-700" onclick="startLevel1()">Start Level 1: C Programming Basics</button>
+      </div>
+    </section>
+
+    <!-- Additional Feature Sections -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="bg-gray-100 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+        <h2 class="text-2xl font-bold mb-4">Customized Study Plans</h2>
+        <i class="fas fa-calendar-alt text-purple-800 text-4xl mb-4"></i>
+        <p>Get a personalized study plan tailored to your learning speed and goals.</p>
+        <a href="study-plan.html" class="text-purple-800 hover:underline">Explore Study Plans</a>
+      </div>
+
+      <div class="bg-gray-100 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+        <h2 class="text-2xl font-bold mb-4">Adaptive Learning</h2>
+        <i class="fas fa-brain text-purple-800 text-4xl mb-4"></i>
+        <p>Content that adjusts to your strengths and weaknesses as you progress.</p>
+        <a href="adaptive-learning.html" class="text-purple-800 hover:underline">Discover Adaptive Learning</a>
+      </div>
+
+      <div class="bg-gray-100 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+        <h2 class="text-2xl font-bold mb-4">Real-Time Collaboration</h2>
+        <i class="fas fa-users text-purple-800 text-4xl mb-4"></i>
+        <p>Join live study sessions and discussions with peers.</p>
+        <a href="chat.html" class="text-purple-800 hover:underline">Join Collaboration</a>
+      </div>
+
+      <div class="bg-gray-100 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+        <h2 class="text-2xl font-bold mb-4">Voice Interaction</h2>
+        <i class="fas fa-microphone text-purple-800 text-4xl mb-4"></i>
+        <p>Engage with AI through voice commands and enhance hands-free learning.</p>
+        <button class="bg-purple-800 text-white p-2 rounded hover:bg-purple-700">Start Voice Learning</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-4 mt-10">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2024 AI Study Companion. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const mainFieldSelect = document.getElementById('mainField');
+    const subfieldsContainer = document.getElementById('subfieldsContainer');
+    const subfieldsDiv = document.getElementById('subfields');
+    const backButton = document.getElementById('backButton');
+  
+    const subfieldsData = {
+      programming: ['C', 'Python', 'Java'],
+      databases: ['MySQL', 'MongoDB', 'PostgreSQL'],
+      dsa: ['Arrays', 'Linked Lists', 'Trees', 'Graphs', 'Dynamic Programming', 'Sorting Algorithms'],
+      mathematics: ['Linear Algebra', 'Calculus', 'Discrete Mathematics', 'Graph Theory']
+    };
+  
+    // Event listener for main field selection
+    mainFieldSelect.addEventListener('change', function() {
+      const selectedField = mainFieldSelect.value;
+      
+      // Clear subfields
+      subfieldsDiv.innerHTML = '';
+  
+      if (selectedField) {
+        // Show subfields container with animation
+        subfieldsContainer.classList.remove('hidden');
+        subfieldsContainer.style.opacity = 1;
+  
+        // Populate subfields based on selected field
+        subfieldsData[selectedField].forEach(subfield => {
+          const subfieldButton = document.createElement('button');
+          subfieldButton.classList.add('bg-purple-700', 'text-white', 'p-2', 'rounded-lg', 'hover:bg-purple-800', 'subfield-button');
+          subfieldButton.textContent = subfield;
+          subfieldButton.addEventListener('click', function() {
+            if (subfield === 'C') {
+              window.location.href = 'indexC.html'; // Redirect to indexC.html for C subfield
+            } else {
+              window.location.href = 'index.html'; // Redirect to index.html for other subfields
+            }
+          });
+          subfieldsDiv.appendChild(subfieldButton);
+        });
+  
+        // Show Back button
+        backButton.classList.remove('hidden');
+      }
+    });
+  
+    // Back button logic
+    backButton.addEventListener('click', function() {
+      subfieldsContainer.style.opacity = 0; // Smoothly fade out
+      setTimeout(() => {
+        subfieldsContainer.classList.add('hidden');  // Hide subfields
+        backButton.classList.add('hidden');         // Hide back button
+        mainFieldSelect.value = '';                 // Reset main field selection
+      }, 500);
+    });
+  </script>
+  
+</body>
+</html>

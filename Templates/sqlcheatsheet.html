@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Cheat Sheet - AI Study Companion</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #7F00FF, #E100FF);
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #7F00FF;
+      border-bottom: 2px solid #7F00FF;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+    .code-block {
+      background: #f7f7f7;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: monospace;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-600 to-pink-500 p-4">
+    <div class="mx-auto flex justify-between items-center">
+      <h1 class="text-lg font-bold ">AI Study Companion</h1>
+      <div>
+        <a href="index.html" class="mr-4 hover:underline">Home</a>
+        <a href="profile.html" class="mr-4  hover:underline">Profile</a>
+        <a href="sqlcheatsheet.html" class="mr-4  hover:underline">SQL Cheat Sheet</a>
+        <a href="login.html" class=" hover:underline">Sign Out</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mt-10 p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center text-purple-600">SQL Cheat Sheet</h1>
+    
+    <!-- Basic SQL Queries -->
+    <div class="section">
+      <h2 class="section-title">Basic Queries</h2>
+      <div class="code-block">
+        <p><strong>Select all columns:</strong></p>
+        <code>SELECT * FROM table_name;</code>
+        <p><strong>Select specific columns:</strong></p>
+        <code>SELECT column1, column2 FROM table_name;</code>
+        <p><strong>Filter results:</strong></p>
+        <code>SELECT * FROM table_name WHERE condition;</code>
+        <p><strong>Order results:</strong></p>
+        <code>SELECT * FROM table_name ORDER BY column_name ASC|DESC;</code>
+        <p><strong>Limit results:</strong></p>
+        <code>SELECT * FROM table_name LIMIT number;</code>
+      </div>
+    </div>
+    
+    <!-- Joins -->
+    <div class="section">
+      <h2 class="section-title">Joins</h2>
+      <div class="code-block">
+        <p><strong>Inner Join:</strong></p>
+        <code>SELECT columns FROM table1 INNER JOIN table2 ON table1.column = table2.column;</code>
+        <p><strong>Left Join:</strong></p>
+        <code>SELECT columns FROM table1 LEFT JOIN table2 ON table1.column = table2.column;</code>
+        <p><strong>Right Join:</strong></p>
+        <code>SELECT columns FROM table1 RIGHT JOIN table2 ON table1.column = table2.column;</code>
+        <p><strong>Full Join:</strong></p>
+        <code>SELECT columns FROM table1 FULL JOIN table2 ON table1.column = table2.column;</code>
+      </div>
+    </div>
+    
+    <!-- Aggregations -->
+    <div class="section">
+      <h2 class="section-title">Aggregations</h2>
+      <div class="code-block">
+        <p><strong>Count:</strong></p>
+        <code>SELECT COUNT(column_name) FROM table_name;</code>
+        <p><strong>Sum:</strong></p>
+        <code>SELECT SUM(column_name) FROM table_name;</code>
+        <p><strong>Average:</strong></p>
+        <code>SELECT AVG(column_name) FROM table_name;</code>
+        <p><strong>Minimum:</strong></p>
+        <code>SELECT MIN(column_name) FROM table_name;</code>
+        <p><strong>Maximum:</strong></p>
+        <code>SELECT MAX(column_name) FROM table_name;</code>
+      </div>
+    </div>
+    
+    <!-- Group By -->
+    <div class="section">
+      <h2 class="section-title">Group By</h2>
+      <div class="code-block">
+        <p><strong>Group results:</strong></p>
+        <code>SELECT column_name, COUNT(*) FROM table_name GROUP BY column_name;</code>
+      </div>
+    </div>
+    
+    <!-- Subqueries -->
+    <div class="section">
+      <h2 class="section-title">Subqueries</h2>
+      <div class="code-block">
+        <p><strong>Subquery in SELECT:</strong></p>
+        <code>SELECT column_name FROM table_name WHERE column_name IN (SELECT column_name FROM another_table);</code>
+        <p><strong>Subquery in WHERE:</strong></p>
+        <code>SELECT column_name FROM table_name WHERE column_name = (SELECT column_name FROM another_table LIMIT 1);</code>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-purple-600 to-pink-500  p-4 mt-10">
+    <div class=" mx-auto text-center">
+      <p>&copy; 2024 AI Study Companion. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

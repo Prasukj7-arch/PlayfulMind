@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selection Sort with Stars</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #7F00FF, #E100FF);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .number-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .number-box {
+      border: 1px solid #333;
+      padding: 10px 20px;
+      margin: 0 5px;
+      font-size: 20px;
+      border-radius: 8px;
+      transition: all 1s ease; /* Smooth transition for sliding effect */
+    }
+    .highlight {
+      background-color: #FFFF99; /* Light yellow highlight */
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #FF4500; /* Darker orange on hover */
+      color: white;
+    }
+    .selected {
+      background-color: #FFA500; /* Orange for selected item */
+      color: white;
+    }
+    .correct {
+      background-color: #4CAF50; /* Green for correct swap */
+      color: white;
+    }
+    .pattern {
+      margin-top: 20px;
+      text-align: left;
+      font-family: monospace;
+      white-space: pre;
+      font-size: 24px;
+      color: #000; /* Black color for stars text */
+    }
+    .pattern div {
+      margin-bottom: 5px;
+    }
+    .slide-in {
+      transform: translateX(0); /* Slide-in animation */
+    }
+    .slide-out {
+      transform: translateX(100%); /* Slide-out animation */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-3xl font-bold mb-6">Selection Sort with Stars</h1>
+    <div class="number-container" id="numberContainer"></div>
+    <button id="checkButton" class="bg-purple-800 text-white">Check Swap</button>
+    <p id="message" class="mt-4 text-lg"></p>
+    <div class="pattern" id="pattern"></div>
+  </div>
+
+  <script>
+    const originalArray = [3, 5, 4, 2, 1];
+    let numbers = [...originalArray];
+    let currentIndex = 0;
+    let selectedNumber = null;
+
+    const numberContainer = document.getElementById('numberContainer');
+    const message = document.getElementById('message');
+    const patternElement = document.getElementById('pattern');
+
+    function renderNumbers() {
+      numberContainer.innerHTML = '';
+      numbers.forEach((number, index) => {
+        const numberBox = document.createElement('div');
+        numberBox.classList.add('number-box');
+        numberBox.textContent = number;
+        numberBox.classList.toggle('selected', index === currentIndex);
+        numberBox.classList.toggle('highlight', index === selectedNumber);
+        numberBox.style.transform = ''; // Reset any previous transformation
+        numberBox.addEventListener('click', () => selectNumber(index));
+        numberContainer.appendChild(numberBox);
+      });
+    }
+
+    function selectNumber(index) {
+      if (index > currentIndex) {
+        selectedNumber = index;
+        message.textContent = `You selected: ${numbers[selectedNumber]}`;
+      } else {
+        message.textContent = 'Select a number after the current position!';
+      }
+    }
+
+    function checkSwap() {
+      if (selectedNumber !== null) {
+        let minIndex = currentIndex;
+        for (let i = currentIndex + 1; i < numbers.length; i++) {
+          if (numbers[i] < numbers[minIndex]) {
+            minIndex = i;
+          }
+        }
+
+        if (selectedNumber === minIndex) {
+          // Swap the elements
+          [numbers[currentIndex], numbers[minIndex]] = [numbers[minIndex], numbers[currentIndex]];
+          animateSlideIn(currentIndex); // Animate the sorted element
+          message.textContent = `Correct! Swapped ${numbers[minIndex]} with ${numbers[currentIndex]}`;
+          
+          // Move to the next element
+          currentIndex++;
+          selectedNumber = null;
+
+          // Check if the array is fully sorted
+          if (currentIndex === numbers.length - 1) {
+            message.textContent = 'Congrats! The array is sorted!';
+            document.getElementById('checkButton').disabled = true;
+          }
+
+          // Update pattern display and render numbers
+          displayPattern(numbers);
+          renderNumbers();
+        } else {
+          message.textContent = 'Wrong selection! Try again.';
+        }
+      } else {
+        message.textContent = 'Select a number to swap!';
+      }
+    }
+
+    function animateSlideIn(index) {
+      const numberBoxes = document.querySelectorAll('.number-box');
+      numberBoxes[index].classList.add('slide-in');
+      numberBoxes[index].classList.remove('slide-out');
+      setTimeout(() => {
+        numberBoxes[index].style.transform = ''; // Reset after animation
+      }, 1000); // Duration matches CSS transition time
+    }
+
+    function displayPattern(arr) {
+      patternElement.innerHTML = '';
+      arr.forEach(item => {
+        const div = document.createElement('div');
+        div.textContent = '*'.repeat(item); // Display stars based on the value
+        patternElement.appendChild(div);
+      });
+    }
+
+    // Initialize the game
+    renderNumbers();
+    document.getElementById('checkButton').addEventListener('click', checkSwap);
+  </script>
+</body>
+</html>

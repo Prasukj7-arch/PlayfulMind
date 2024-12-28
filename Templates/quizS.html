@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #7F00FF, #E100FF);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .question {
+            font-weight: bold;
+        }
+        .answer {
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .timer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            font-size: 1.2em;
+        }
+        .no-switch {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div id="timer" class="timer">05:00</div>
+        <h1 class="text-2xl font-bold mb-4 text-center">SQL Basics Quiz</h1>
+        <form id="quizForm">
+            <!-- Question 1 -->
+            <div class="question">
+                <label for="q1">1. What does SQL stand for?</label>
+                <div class="answer">
+                    <input type="radio" id="q1a" name="q1" value="Structured Query Language"> 
+                    <label for="q1a">Structured Query Language</label><br>
+                    <input type="radio" id="q1b" name="q1" value="Simple Query Language"> 
+                    <label for="q1b">Simple Query Language</label>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question">
+                <label for="q2">2. Which SQL keyword is used to retrieve data from a database?</label>
+                <div class="answer">
+                    <input type="radio" id="q2a" name="q2" value="SELECT"> 
+                    <label for="q2a">SELECT</label><br>
+                    <input type="radio" id="q2b" name="q2" value="INSERT"> 
+                    <label for="q2b">INSERT</label>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question">
+                <label for="q3">3. How do you delete a table from a database?</label>
+                <div class="answer">
+                    <input type="radio" id="q3a" name="q3" value="DROP TABLE"> 
+                    <label for="q3a">DROP TABLE</label><br>
+                    <input type="radio" id="q3b" name="q3" value="DELETE"> 
+                    <label for="q3b">DELETE</label>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question">
+                <label for="q4">4. Which SQL statement is used to insert a new record in a database?</label>
+                <div class="answer">
+                    <input type="radio" id="q4a" name="q4" value="INSERT INTO"> 
+                    <label for="q4a">INSERT INTO</label><br>
+                    <input type="radio" id="q4b" name="q4" value="ADD NEW"> 
+                    <label for="q4b">ADD NEW</label>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question">
+                <label for="q5">5. How do you select all columns from a table named "Users"?</label>
+                <div class="answer">
+                    <input type="radio" id="q5a" name="q5" value="SELECT * FROM Users"> 
+                    <label for="q5a">SELECT * FROM Users</label><br>
+                    <input type="radio" id="q5b" name="q5" value="SELECT ALL FROM Users"> 
+                    <label for="q5b">SELECT ALL FROM Users</label>
+                </div>
+            </div>
+
+            <button type="button" class="bg-purple-800 text-white px-4 py-2 rounded mt-4" onclick="submitQuiz()">Submit Quiz</button>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        let timer = 120; // 5 minutes in seconds
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            const interval = setInterval(() => {
+                const minutes = Math.floor(timer / 60);
+                const seconds = timer % 60;
+                timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                timer--;
+
+                if (timer < 0) {
+                    clearInterval(interval);
+                    submitQuiz(); // Automatically submit quiz when time is up
+                    setTimeout(() => window.location.href = 'Index.html', 1000); // Redirect after 1 second
+                }
+            }, 1000);
+        }
+
+        function submitQuiz() {
+            const userConfirmed = confirm("Are you sure you want to submit the quiz?");
+
+            if (userConfirmed) {
+                const correctAnswers = {
+                    q1: "Structured Query Language",
+                    q2: "SELECT",
+                    q3: "DROP TABLE",
+                    q4: "INSERT INTO",
+                    q5: "SELECT * FROM Users"
+                };
+
+                let score = 0;
+                let totalQuestions = 5;
+                
+                for (let i = 1; i <= totalQuestions; i++) {
+                    let answer = document.querySelector(`input[name="q${i}"]:checked`);
+                    if (answer && answer.value === correctAnswers[`q${i}`]) {
+                        score++;
+                    }
+                }
+
+                let resultDiv = document.getElementById('result');
+                resultDiv.textContent = `You scored ${score} out of ${totalQuestions}`;
+
+                // Redirect to the SQL Dashboard after 2 seconds
+                setTimeout(() => window.location.href = 'Index.html', 2000); // Adjust as needed
+            }
+        }
+
+        // Start timer when page loads
+        window.onload = () => {
+            startTimer();
+        };
+    </script>
+</body>
+</html>

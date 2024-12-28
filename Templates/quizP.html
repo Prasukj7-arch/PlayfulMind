@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #7F00FF, #E100FF);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .question {
+            font-weight: bold;
+        }
+        .answer {
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .timer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            font-size: 1.2em;
+        }
+        .no-switch {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div id="timer" class="timer">05:00</div>
+        <h1 class="text-2xl font-bold mb-4 text-center">Python Basics Quiz</h1>
+        <form id="quizForm">
+            <!-- Question 1 -->
+            <div class="question">
+                <label for="q1">1. What is the keyword used to define a function in Python?</label>
+                <div class="answer">
+                    <input type="radio" id="q1a" name="q1" value="def"> 
+                    <label for="q1a">def</label><br>
+                    <input type="radio" id="q1b" name="q1" value="function"> 
+                    <label for="q1b">function</label>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question">
+                <label for="q2">2. How do you create a list in Python?</label>
+                <div class="answer">
+                    <input type="radio" id="q2a" name="q2" value="[]"> 
+                    <label for="q2a">[]</label><br>
+                    <input type="radio" id="q2b" name="q2" value="{}"> 
+                    <label for="q2b">{}</label>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question">
+                <label for="q3">3. What is the correct way to import a module in Python?</label>
+                <div class="answer">
+                    <input type="radio" id="q3a" name="q3" value="import module_name"> 
+                    <label for="q3a">import module_name</label><br>
+                    <input type="radio" id="q3b" name="q3" value="include module_name"> 
+                    <label for="q3b">include module_name</label>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question">
+                <label for="q4">4. How do you comment a line in Python?</label>
+                <div class="answer">
+                    <input type="radio" id="q4a" name="q4" value="#"> 
+                    <label for="q4a">#</label><br>
+                    <input type="radio" id="q4b" name="q4" value="//"> 
+                    <label for="q4b">//</label>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question">
+                <label for="q5">5. How do you access the first element of a list named "my_list"?</label>
+                <div class="answer">
+                    <input type="radio" id="q5a" name="q5" value="my_list[0]"> 
+                    <label for="q5a">my_list[0]</label><br>
+                    <input type="radio" id="q5b" name="q5" value="my_list(0)"> 
+                    <label for="q5b">my_list(0)</label>
+                </div>
+            </div>
+
+            <button type="button" class="bg-purple-800 text-white px-4 py-2 rounded mt-4" onclick="submitQuiz()">Submit Quiz</button>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        let timer = 300; // 5 minutes in seconds
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            const interval = setInterval(() => {
+                const minutes = Math.floor(timer / 60);
+                const seconds = timer % 60;
+                timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                timer--;
+
+                if (timer < 0) {
+                    clearInterval(interval);
+                    submitQuiz(); // Automatically submit quiz when time is up
+                    setTimeout(() => window.location.href = 'IndexP.html', 1000); // Redirect after 1 second
+                }
+            }, 1000);
+        }
+
+        function submitQuiz() {
+            const userConfirmed = confirm("Are you sure you want to submit the quiz?");
+
+            if (userConfirmed) {
+                const correctAnswers = {
+                    q1: "def",
+                    q2: "[]",
+                    q3: "import module_name",
+                    q4: "#",
+                    q5: "my_list[0]"
+                };
+
+                let score = 0;
+                let totalQuestions = 5;
+                
+                for (let i = 1; i <= totalQuestions; i++) {
+                    let answer = document.querySelector(`input[name="q${i}"]:checked`);
+                    if (answer && answer.value === correctAnswers[`q${i}`]) {
+                        score++;
+                    }
+                }
+
+                let resultDiv = document.getElementById('result');
+                resultDiv.textContent = `You scored ${score} out of ${totalQuestions}`;
+
+                // Redirect to the Python Dashboard after 2 seconds
+                setTimeout(() => window.location.href = 'IndexP.html', 2000); // Adjust as needed
+            }
+        }
+
+        // Start timer when page loads
+        window.onload = () => {
+            startTimer();
+        };
+    </script>
+</body>
+</html>

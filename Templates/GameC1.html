@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Pattern Builder Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .grid-container {
+            display: grid;
+            gap: 2px;
+            background-color: #ddd;
+        }
+        .grid-item {
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            border: 1px solid #bbb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .grid-item.active {
+            background-color: #4a90e2;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-200 p-8">
+    <div class="container mx-auto max-w-xl bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold mb-4 text-center">Star Pattern Builder Game</h1>
+        <form id="patternForm" class="mb-6 text-center">
+            <label for="rows" class="block text-lg font-semibold mb-2">Enter number of rows:</label>
+            <input type="number" id="rows" name="rows" min="1" max="20" required class="border rounded p-2 w-32 text-center">
+            <button type="submit" class="mt-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Build Pattern</button>
+        </form>
+        <div id="gridContainer" class="grid-container mx-auto"></div>
+        <button id="clearButton" class="mt-6 bg-red-500 text-white p-2 rounded hover:bg-red-600">Clear Pattern</button>
+        <h2 id="patternInfo" class="mt-4 text-lg text-center"></h2>
+    </div>
+
+    <script>
+        const form = document.getElementById('patternForm');
+        const gridContainer = document.getElementById('gridContainer');
+        const clearButton = document.getElementById('clearButton');
+        const patternInfo = document.getElementById('patternInfo');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const rows = parseInt(document.getElementById('rows').value, 10);
+            buildGrid(rows);
+            patternInfo.textContent = '';
+        });
+
+        clearButton.addEventListener('click', function() {
+            gridContainer.innerHTML = '';
+            patternInfo.textContent = '';
+        });
+
+        function buildGrid(rows) {
+            gridContainer.innerHTML = '';
+            gridContainer.style.gridTemplateColumns = `repeat(${rows}, 30px)`;
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < rows; j++) {
+                    const gridItem = document.createElement('div');
+                    gridItem.classList.add('grid-item');
+                    gridItem.addEventListener('click', function() {
+                        this.classList.toggle('active');
+                        updatePatternInfo();
+                    });
+                    gridContainer.appendChild(gridItem);
+                }
+            }
+        }
+
+        function updatePatternInfo() {
+            const activeItems = gridContainer.querySelectorAll('.grid-item.active');
+            let pattern = '';
+            const rows = Math.sqrt(activeItems.length);
+
+            for (let i = 0; i < rows; i++) {
+                let line = '';
+                for (let j = 0; j < rows; j++) {
+                    if (i >= j) {
+                        line += '*';
+                    } else {
+                        line += ' ';
+                    }
+                }
+                pattern += line + '\n';
+            }
+            patternInfo.textContent = pattern;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Collaboration - AI Study Companion</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body class="font-sans bg-gray-100">
+  <!-- Navbar -->
+  <nav class="bg-blue-900 p-4 text-white">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-lg font-bold">AI Study Companion</h1>
+      <div>
+        <a href="index.html" class="mr-4 hover:underline">Home</a>
+        <a href="adaptive-learning.html" class="mr-4 hover:underline">Adaptive Learning</a>
+        <a href="study-plan.html" class="mr-4 hover:underline">Study Plan</a>
+        <a href="profile.html" class="mr-4 hover:underline">Profile</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="container mx-auto mt-10 p-4">
+    <h1 class="text-4xl font-bold mb-6">Real-Time Peer Collaboration</h1>
+    <p class="text-lg mb-6">Engage with peers in real-time discussion rooms to share insights and knowledge on study topics.</p>
+
+    <div class="chat-room bg-white p-6 rounded-lg shadow-md">
+      <div class="chat-box mb-4 bg-gray-100 p-4 rounded-lg h-64 overflow-y-auto" id="chat-box">
+        <!-- Messages will be inserted here dynamically -->
+      </div>
+      <input type="text" id="message-input" placeholder="Type a message..." class="border p-2 w-full mb-2 rounded">
+      <button id="send-button" class="bg-blue-800 text-white p-2 rounded">Send</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="chat.js"></script>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white p-4 mt-10">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2024 AI Study Companion. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

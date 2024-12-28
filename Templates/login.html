@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educat Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://img.freepik.com/premium-photo/sketch-human-brain-virtual-creative-ai-hologram-with-blurry-skyline-background-multiexposure_872147-14961.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.2); /* Slightly more transparent */
+            backdrop-filter: blur(20px); /* Increased blur effect */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .left-section, .right-section {
+            padding: 40px;
+            width: 50%;
+            background-color: rgba(255, 255, 255, 0.2); /* More transparency */
+            border-radius: 8px;
+            backdrop-filter: blur(20px); /* More blur */
+        }
+
+        .left-section {
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-section h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #1F51FF;
+        }
+
+        .right-section h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #1F51FF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0033cc;
+        }
+
+        .forgot-password {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #1F51FF;
+            cursor: pointer;
+        }
+
+        .signup-link {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #1F51FF;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .info-box {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .info-card {
+            background-color: rgba(255, 255, 255, 0.2); /* More transparency */
+            padding: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(15px); /* Slightly less blur for cards */
+        }
+
+        .info-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+          <center><img src="https://png.pngtree.com/png-vector/20240813/ourmid/pngtree-user-icon-png-image_13468800.png" style="width:350px; height:350px;"></center>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <center><b><i> "Studying becomes an enjoyable experience thanks to its innovative use of game-based learning."</center></b></i></p>
+        </div>
+
+        <div class="right-section">
+            <h2><center>Login to Ignited Minds</center ></h2>
+            <form id="loginForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                
+                <button type="submit">Login</button>
+                <p class="forgot-password">Forgot password?</p>
+                <p class="signup-link"><a href="signup.html">Don't have an account? Sign up</a></p>
+                <!-- <p id="error" class="text-red-500 mt-4 hidden">Invalid credentials. Please try again.</p> -->
+            </form>
+
+            <div class="info-box">
+                <div class="info-card">
+                    <h3><b>Fun</b></h3>
+                    <p>Gamified lessons with points, badges, and leaderboards.</p>
+                </div>
+                <div class="info-card">
+                    <h3><b>Engaging</b></h3>
+                    <p>Interactive content with hands-on projects and educational games.</p>
+                </div>
+                <div class="info-card">
+                    <h3><b>Adaptive</b></h3>
+                    <p>Personalized learning with adjustable difficulty based on progress.</p>
+                </div>
+                <div class="info-card">
+                    <h3><b>Social</b></h3>
+                    <p>Multiplayer games to compete, collaborate, and share achievements.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Retrieve stored credentials from localStorage
+            const storedUsername = localStorage.getItem('username');
+            const storedPassword = localStorage.getItem('password');
+
+            // Check if the credentials match
+            if (username === storedUsername && password === storedPassword) {
+                // Redirect to the fields page (fields.html)
+                window.location.href = 'fields.html';
+            } else {
+                // Show error message
+                document.getElementById('error').classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

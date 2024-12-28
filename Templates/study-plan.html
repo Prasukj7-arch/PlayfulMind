@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Generated Study Plan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .plan {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #e9d8fd; /* Light purple matching the theme */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        select, button {
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%;
+            font-size: 16px;
+        }
+        button {
+            background-color: #6D28D9; /* Matching primary color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #5B21B6; /* Darker shade for hover */
+        }
+        h1, h2 {
+            color: #4A4A4A; /* Consistent heading color */
+        }
+        .select-wrapper {
+            margin-top: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .select-wrapper select {
+            border: none;
+            outline: none;
+        }
+        .select-wrapper select:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="bg-gradient-to-r from-purple-600 to-pink-500 p-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-lg font-bold">AI Study Companion - Study Plan</h1>
+            <div>
+                <a href="profile.html" class="mr-4 hover:underline">Profile</a>
+                <a href="index.html" class="mr-4 hover:underline">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-10">
+        <h1 class="text-4xl font-bold mb-6 text-center">AI-Generated Study Plan</h1>
+
+        <div class="container">
+            <h2 class="text-2xl font-semibold mb-4">Select your learning style:</h2>
+            <div class="select-wrapper">
+                <select id="learningStyle" class="p-2">
+                    <option value="visual">Visual</option>
+                    <option value="auditory">Auditory</option>
+                    <option value="kinesthetic">Kinesthetic</option>
+                </select>
+            </div>
+
+            <h2 class="text-2xl font-semibold mt-6 mb-4">Select your learning topic:</h2>
+            <div class="select-wrapper">
+                <select id="topic" class="p-2">
+                    <option value="c_programming">C Programming</option>
+                    <option value="sql">SQL</option>
+                    <option value="python">Python</option>
+                    <option value="data_structures">Data Structures</option>
+                </select>
+            </div>
+
+            <h2 class="text-2xl font-semibold mt-6 mb-4">Select time frame:</h2>
+            <div class="select-wrapper">
+                <select id="timeFrame" class="p-2">
+                    <option value="months">Months</option>
+                    <option value="weeks">Weeks</option>
+                    <option value="days">Days</option>
+                    <option value="hours">Hours</option>
+                </select>
+            </div>
+
+            <button onclick="generateStudyPlan()">Generate Study Plan</button>
+
+            <div id="studyPlan" class="plan" style="display: none;">
+                <!-- Study plan will be displayed here -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-4 mt-10">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 AI Study Companion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Predefined study plans with games based on learning style, topic, and time frame
+        const studyPlans = {
+            "c_programming": {
+                "visual": {
+                    "months": {
+                        "month_1": ["Play a C programming puzzle game focusing on syntax", "Create flowcharts for C algorithms"],
+                        "month_2": ["Build a C programming simulation game", "Solve interactive C programming challenges"],
+                        "month_3": ["Develop a text-based adventure game in C", "Participate in a C coding competition"]
+                    },
+                    "weeks": {
+                        "week_1": ["Play a C syntax matching game", "Draw flowcharts for basic algorithms"],
+                        "week_2": ["Build a small simulation game in C", "Complete C coding challenges on a game-based platform"],
+                        "week_3": ["Create a basic text adventure game", "Compete in a local C programming contest"]
+                    },
+                    "days": {
+                        "day_1": ["Play a syntax puzzle game in C", "Draw simple flowcharts"],
+                        "day_2": ["Build a basic C game", "Solve small C coding challenges"],
+                        "day_3": ["Work on a text-based game project", "Engage in a mini coding competition"]
+                    },
+                    "hours": {
+                        "hour_1": ["Play a C syntax game", "Sketch a flowchart"],
+                        "hour_2": ["Start building a simple C game", "Solve a quick coding challenge"],
+                        "hour_3": ["Continue your game project", "Review coding concepts through a mini-quiz"]
+                    }
+                },
+                "auditory": {
+                    "months": {
+                        "month_1": ["Play an audio-based C syntax game", "Discuss C algorithms in a study group"],
+                        "month_2": ["Record and listen to C programming challenges", "Play a game focusing on C pointers and memory"],
+                        "month_3": ["Create an audio-based trivia game on C programming", "Engage in a C programming quiz competition"]
+                    },
+                    "weeks": {
+                        "week_1": ["Play an auditory C syntax game", "Discuss algorithms through voice chat"],
+                        "week_2": ["Record yourself solving C problems", "Play a memory-based C game"],
+                        "week_3": ["Develop a trivia game with C concepts", "Participate in an online quiz competition"]
+                    },
+                    "days": {
+                        "day_1": ["Play a C syntax audio game", "Join a discussion on algorithms"],
+                        "day_2": ["Record your problem-solving process", "Play a memory game on C concepts"],
+                        "day_3": ["Create a trivia game project", "Take part in a mini-quiz"]
+                    },
+                    "hours": {
+                        "hour_1": ["Play an audio C syntax game", "Join an algorithm discussion"],
+                        "hour_2": ["Record a quick coding session", "Play a memory game on C"],
+                        "hour_3": ["Work on a trivia game", "Engage in a mini-quiz"]
+                    }
+                },
+                "kinesthetic": {
+                    "months": {
+                        "month_1": ["Build a C game that involves solving coding puzzles", "Experiment with C programming challenges in a sandbox"],
+                        "month_2": ["Create a physical board game with C programming challenges", "Pair program on a complex C project"],
+                        "month_3": ["Develop a large C game project", "Participate in a C programming hackathon"]
+                    },
+                    "weeks": {
+                        "week_1": ["Build a simple C game with interactive puzzles", "Complete coding challenges in a sandbox environment"],
+                        "week_2": ["Create a board game with coding challenges", "Work on a pair programming project"],
+                        "week_3": ["Start a large C game project", "Join a coding competition or hackathon"]
+                    },
+                    "days": {
+                        "day_1": ["Build a basic C game", "Solve coding puzzles"],
+                        "day_2": ["Design a board game with programming challenges", "Pair program on a small project"],
+                        "day_3": ["Continue your game development", "Participate in a mini hackathon"]
+                    },
+                    "hours": {
+                        "hour_1": ["Build a simple C game", "Solve a quick coding puzzle"],
+                        "hour_2": ["Design a board game concept", "Pair program on a small task"],
+                        "hour_3": ["Work on game development", "Join a brief hackathon session"]
+                    }
+                }
+            },
+            // Add study plans for sql, python, and data_structures similar to above
+        };
+
+        // Function to generate the study plan
+        function generateStudyPlan() {
+            const learningStyle = document.getElementById('learningStyle').value;
+            const topic = document.getElementById('topic').value;
+            const timeFrame = document.getElementById('timeFrame').value;
+            const studyPlanDiv = document.getElementById('studyPlan');
+
+            const plan = studyPlans[topic][learningStyle][timeFrame];
+
+            let planHtml = "<h3 class='text-2xl font-semibold mb-4'>Study Plan for " + topic.replace('_', ' ').toUpperCase() + " (" + learningStyle.toUpperCase() + " Learner) - Time Frame: " + timeFrame.charAt(0).toUpperCase() + timeFrame.slice(1) + "</h3>";
+            planHtml += "<ul class='list-disc pl-5'>";
+            for (const period in plan) {
+                planHtml += "<li class='font-semibold'>" + period.replace('_', ' ').toUpperCase() + ":";
+                planHtml += "<ul class='list-inside list-disc pl-5'>";
+                plan[period].forEach(task => {
+                    planHtml += "<li>" + task + "</li>";
+                });
+                planHtml += "</ul></li>";
+            }
+            planHtml += "</ul>";
+
+            studyPlanDiv.innerHTML = planHtml;
+            studyPlanDiv.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>

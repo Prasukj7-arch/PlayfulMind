@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Study Companion - Subfields</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://img.freepik.com/premium-photo/sketch-human-brain-virtual-creative-ai-hologram-with-blurry-skyline-background-multiexposure_872147-14961.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    nav, footer {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .clickable-box {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .clickable-box:hover {
+      background: rgba(0, 0, 0, 0.5);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="font-sans">
+  <!-- Navbar -->
+  <nav class="p-4 text-white">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-lg font-bold">AI Study Companion</h1>
+      <a href="fields.html" class="text-white hover:underline">Back to Dashboard</a>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="container mx-auto mt-10 p-4">
+    <h1 class="text-4xl font-bold mb-6 text-center">Select a Subfield</h1>
+
+    <!-- Subfields Section -->
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <!-- Buttons will be dynamically generated here -->
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="p-4 text-white text-center">
+    <div class="container mx-auto">
+      <p>&copy; 2024 AI Study Companion. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Get field from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const field = urlParams.get('field');
+
+    // Subfields mapping
+    const subfields = {
+      programming: ["Python", "Java", "JavaScript"],
+      databases: ["MySQL", "PostgreSQL", "MongoDB"],
+      dsa: ["Arrays", "Stacks", "Queues"]
+    };
+
+    // Function to create subfield buttons
+    function createSubfieldButtons(field) {
+      const subfieldsContainer = document.querySelector('main section');
+      subfieldsContainer.innerHTML = ''; // Clear existing content
+
+      if (subfields[field]) {
+        subfields[field].forEach(subfield => {
+          const subfieldButton = document.createElement('a');
+          subfieldButton.className = 'clickable-box';
+          // Check if the subfield is 'Stacks' and redirect accordingly
+          if (subfield === 'Stacks') {
+            subfieldButton.href = `IndexS.html`;
+          } 
+          else if (subfield === 'Python'){
+            subfieldButton.href = `IndexP.html`;
+          }else {
+            // Link to index.html with the field and subfield as URL parameters
+            subfieldButton.href = `index.html?field=${encodeURIComponent(field)}&subfield=${encodeURIComponent(subfield)}`;
+          }
+          subfieldButton.innerHTML = `
+            <h2 class="text-2xl font-bold mb-4">${subfield}</h2>
+            <p>Learn more about ${subfield}.</p>
+          `;
+          subfieldsContainer.appendChild(subfieldButton);
+        });
+      } else {
+        subfieldsContainer.innerHTML = '<p class="text-center text-white">No subfields available for this field.</p>';
+      }
+    }
+
+    // Initialize page with subfield buttons
+    createSubfieldButtons(field);
+  </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower of Hanoi Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #7F00FF, #E100FF); /* Gradient background */
+            color: white; /* White text */
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, p {
+            color: white;
+        }
+
+        .peg-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .peg {
+            width: 100px;
+            height: 300px;
+            border: 2px solid #fff;
+            position: relative;
+        }
+
+        .disk {
+            position: absolute;
+            height: 30px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 30px;
+        }
+
+        /* Disk colors */
+        .disk1 {
+            background-color: #39FF14; /* Neon green */
+        }
+
+        .disk2 {
+            background-color: #FF6F00; /* Neon orange */
+        }
+
+        .disk3 {
+            background-color: #FF1493; /* Neon pink */
+        }
+
+        #message {
+            font-size: 20px;
+            color: lightgreen;
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem; /* Rounded corners */
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #555; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-4xl font-bold mb-6">Tower of Hanoi</h1>
+    <p class="text-lg mb-6">Move all the disks from the first peg to the third peg, following the rules of the Tower of Hanoi.</p>
+
+    <div class="peg-container">
+        <div class="peg" id="peg1"></div>
+        <div class="peg" id="peg2"></div>
+        <div class="peg" id="peg3"></div>
+    </div>
+    
+    <p id="message" class="text-xl"></p>
+    <button id="resetButton" class="bg-purple-800 hover:bg-purple-700">Reset Game</button>
+    <button id="solveButton" class="bg-purple-800 hover:bg-purple-700">Solve</button>
+
+    <script>
+        let pegs = [[], [], []];
+        let selectedDisk = null;
+        let selectedPegIndex = null;
+        let moveCount = 0;
+        const pegElements = [document.getElementById("peg1"), document.getElementById("peg2"), document.getElementById("peg3")];
+        const messageElement = document.getElementById("message");
+        const resetButton = document.getElementById("resetButton");
+        const solveButton = document.getElementById("solveButton");
+        let moves = [];
+
+        // Initialize the game
+        function initializeGame() {
+            pegs = [[3, 2, 1], [], []]; // Reset with 3 disks
+            selectedDisk = null;
+            selectedPegIndex = null;
+            messageElement.innerText = '';
+            renderPegs();
+            moveCount = 0;
+            moves = []; // Clear any pre-saved moves
+            clearTimeouts(); // Clear any pending timeouts
+        }
+
+        // Render the disks on the pegs
+        function renderPegs() {
+            pegElements.forEach((pegElement, pegIndex) => {
+                pegElement.innerHTML = ''; // Clear the peg
+                pegs[pegIndex].forEach((diskSize, diskIndex) => {
+                    const diskElement = document.createElement("div");
+                    diskElement.className = `disk disk${diskSize}`;
+                    diskElement.style.width = (diskSize * 30) + "px"; // Disk size
+                    diskElement.style.bottom = (diskIndex * 35) + "px"; // Position of the disk on the peg
+                    diskElement.innerText = diskSize;
+                    pegElement.appendChild(diskElement);
+                });
+            });
+        }
+
+        // Handle peg click (for manual playing)
+        function handlePegClick(pegIndex) {
+            const peg = pegs[pegIndex];
+            if (selectedDisk === null) {
+                if (peg.length > 0) {
+                    selectedDisk = peg[peg.length - 1]; // Select the top disk
+                    selectedPegIndex = pegIndex;
+                    messageElement.innerText = `Selected disk ${selectedDisk} from Peg ${pegIndex + 1}`;
+                }
+            } else {
+                if (peg.length === 0 || peg[peg.length - 1] > selectedDisk) {
+                    pegs[pegIndex].push(selectedDisk); // Move disk to new peg
+                    pegs[selectedPegIndex].pop(); // Remove from old peg
+                    messageElement.innerText = `Moved disk ${selectedDisk} to Peg ${pegIndex + 1}`;
+                    selectedDisk = null;
+                    selectedPegIndex = null;
+
+                    // Check for winning condition
+                    if (pegs[2].length === 3 && JSON.stringify(pegs[2]) === JSON.stringify([3, 2, 1])) {
+                        messageElement.innerText = "You won the game!";
+                    }
+                } else {
+                    messageElement.innerText = "Invalid move! You can only place smaller disks on larger disks.";
+                    selectedDisk = null;
+                    selectedPegIndex = null;
+                }
+            }
+            renderPegs();
+        }
+
+        // Solve the Tower of Hanoi puzzle recursively
+        function solveHanoi(n, fromPeg, toPeg, auxPeg) {
+            if (n === 0) return;
+            solveHanoi(n - 1, fromPeg, auxPeg, toPeg); // Move n-1 disks to auxiliary peg
+            moves.push([fromPeg, toPeg]); // Move nth disk to destination peg
+            solveHanoi(n - 1, auxPeg, toPeg, fromPeg); // Move n-1 disks from auxiliary peg to destination peg
+        }
+
+        // Execute moves with a 2-second delay
+        function executeMoves() {
+            if (moveCount >= moves.length) {
+                messageElement.innerText = "Solution completed!";
+                return;
+            }
+
+            const [fromPeg, toPeg] = moves[moveCount];
+            pegs[toPeg].push(pegs[fromPeg].pop());
+            renderPegs();
+            messageElement.innerText = `Move ${moveCount + 1}: Moved disk from Peg ${fromPeg + 1} to Peg ${toPeg + 1}`;
+            moveCount++;
+
+            setTimeout(executeMoves, 2000); // 2-second interval for each move
+        }
+
+        // Reset the game
+        resetButton.addEventListener("click", initializeGame);
+
+        // Solve the puzzle
+        solveButton.addEventListener("click", () => {
+            initializeGame(); // Reset before solving
+            solveHanoi(3, 0, 2, 1); // Solve for 3 disks
+            moveCount = 0;
+            setTimeout(executeMoves, 2000); // Start solving with a delay
+        });
+
+        // Attach click handlers for manual play
+        pegElements.forEach((pegElement, index) => {
+            pegElement.addEventListener("click", () => handlePegClick(index));
+        });
+
+        // Clear all timeouts
+        function clearTimeouts() {
+            let id = window.setTimeout(null, 0);
+            while (id--) {
+                window.clearTimeout(id);
+            }
+        }
+
+        // Initialize on page load
+        initializeGame();
+    </script>
+</body>
+</html>

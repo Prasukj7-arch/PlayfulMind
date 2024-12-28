@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stacks Cheat Sheet - AI Study Companion</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #7F00FF, #E100FF);
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #7F00FF;
+      border-bottom: 2px solid #7F00FF;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+    .code-block {
+      background: #f7f7f7;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: monospace;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-600 to-pink-500 p-4">
+    <div class="mx-auto flex justify-between items-center">
+      <h1 class="text-lg font-bold">AI Study Companion</h1>
+      <div>
+        <a href="index.html" class="mr-4 hover:underline">Home</a>
+        <a href="profile.html" class="mr-4 hover:underline">Profile</a>
+        <a href="sqlcheatsheet.html" class="mr-4 hover:underline">SQL Cheat Sheet</a>
+        <a href="stackscheatsheet.html" class="mr-4 hover:underline">Stacks Cheat Sheet</a>
+        <a href="login.html" class="hover:underline">Sign Out</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mt-10 p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center text-purple-600">Stacks Cheat Sheet</h1>
+    
+    <!-- Basic Operations -->
+    <div class="section">
+      <h2 class="section-title">Basic Operations</h2>
+      <div class="code-block">
+        <p><strong>Push:</strong></p>
+        <code>stack.push(element);</code>
+        <p><strong>Pop:</strong></p>
+        <code>stack.pop();</code>
+        <p><strong>Peek:</strong></p>
+        <code>stack.peek();</code>
+        <p><strong>Is Empty:</strong></p>
+        <code>stack.isEmpty();</code>
+        <p><strong>Size:</strong></p>
+        <code>stack.size();</code>
+      </div>
+    </div>
+    
+    <!-- Example Implementations -->
+    <div class="section">
+      <h2 class="section-title">Example Implementations</h2>
+      <div class="code-block">
+        <p><strong>Array-Based Stack:</strong></p>
+        <code>
+          class ArrayStack {<br>
+            &nbsp;&nbsp;constructor() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.stack = [];<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;push(element) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.stack.push(element);<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;pop() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return this.stack.pop();<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;peek() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return this.stack[this.stack.length - 1];<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;isEmpty() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return this.stack.length === 0;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;size() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return this.stack.length;<br>
+            &nbsp;&nbsp;}<br>
+          }<br>
+        </code>
+        <p><strong>Linked List-Based Stack:</strong></p>
+        <code>
+          class Node {<br>
+            &nbsp;&nbsp;constructor(value) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.value = value;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.next = null;<br>
+            &nbsp;&nbsp;}<br>
+          }<br>
+          class LinkedListStack {<br>
+            &nbsp;&nbsp;constructor() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.top = null;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.size = 0;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;push(value) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;const node = new Node(value);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;node.next = this.top;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.top = node;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.size++;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;pop() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (this.top === null) return null;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;const value = this.top.value;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.top = this.top.next;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.size--;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return value;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;peek() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return this.top ? this.top.value : null;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;isEmpty() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return this.size === 0;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;size() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return this.size;<br>
+            &nbsp;&nbsp;}<br>
+          }<br>
+        </code>
+      </div>
+    </div>
+    
+    <!-- Common Use Cases -->
+    <div class="section">
+      <h2 class="section-title">Common Use Cases</h2>
+      <div class="code-block">
+        <p><strong>Undo/Redo:</strong></p>
+        <code>
+          // Stack for undo operations<br>
+          const undoStack = new ArrayStack();<br>
+          // Stack for redo operations<br>
+          const redoStack = new ArrayStack();<br>
+        </code>
+        <p><strong>Expression Evaluation:</strong></p>
+        <code>
+          // Evaluate postfix expressions<br>
+          function evaluatePostfix(expression) {<br>
+            &nbsp;&nbsp;const stack = new ArrayStack();<br>
+            &nbsp;&nbsp;expression.split(' ').forEach(token => {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (!isNaN(token)) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stack.push(Number(token));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const b = stack.pop();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const a = stack.pop();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch (token) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case '+': stack.push(a + b); break;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case '-': stack.push(a - b); break;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case '*': stack.push(a * b); break;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case '/': stack.push(a / b); break;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;});<br>
+            &nbsp;&nbsp;return stack.pop();<br>
+          }<br>
+        </code>
+      </div>
+    </div>
+    
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-purple-600 to-pink-500 p-4 mt-10">
+    <div class="mx-auto text-center">
+      <p>&copy; 2024 AI Study Companion. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

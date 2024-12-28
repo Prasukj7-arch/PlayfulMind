@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Study Companion - Fields</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://img.freepik.com/premium-photo/sketch-human-brain-virtual-creative-ai-hologram-with-blurry-skyline-background-multiexposure_872147-14961.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    nav, footer {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .clickable-box {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .clickable-box:hover {
+      background: rgba(0, 0, 0, 0.5);
+      transform: scale(1.05);
+    }
+
+    .nav-button:hover, .footer-button:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body class="font-sans">
+  <!-- Navbar -->
+  <nav class="p-4 text-white nav-button">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-lg font-bold">AI Study Companion</h1>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="container mx-auto mt-10 p-4">
+    <h1 class="text-4xl font-bold mb-6 text-center">Select Your Field of Study</h1>
+
+    <!-- Fields Section -->
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <!-- Programming Languages -->
+      <a href="subfields.html?field=programming" class="clickable-box">
+        <h2 class="text-2xl font-bold mb-4">Programming Languages</h2>
+        <i class="fas fa-code text-purple-800 text-4xl mb-4"></i>
+        <p>Learn programming languages like Python, Java, and more.</p>
+      </a>
+
+      <!-- Databases -->
+      <a href="subfields.html?field=databases" class="clickable-box">
+        <h2 class="text-2xl font-bold mb-4">Databases</h2>
+        <i class="fas fa-database text-purple-800 text-4xl mb-4"></i>
+        <p>Learn about MySQL, PostgreSQL, MongoDB, and more.</p>
+      </a>
+
+      <!-- Data Structures and Algorithms -->
+      <a href="subfields.html?field=dsa" class="clickable-box">
+        <h2 class="text-2xl font-bold mb-4">Data Structures & Algorithms</h2>
+        <i class="fas fa-project-diagram text-purple-800 text-4xl mb-4"></i>
+        <p>Master essential DSA concepts like arrays, stacks, and queues.</p>
+      </a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="p-4 text-white footer-button">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2024 AI Study Companion. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

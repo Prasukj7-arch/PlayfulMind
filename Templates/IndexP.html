@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Learning Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #7F00FF, #E100FF);
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .editor-container {
+      margin-bottom: 20px;
+    }
+    .CodeMirror {
+      height: 400px;
+    }
+    .text-editor-container {
+      margin-top: 20px;
+      display: none; /* Hidden by default */
+    }
+  </style>
+</head>
+<body class="font-sans bg-white">
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-600 to-pink-500 p-4 text-white">
+    <div class="mx-auto flex justify-between items-center">
+      <h1 class="text-lg font-bold">Python Dashboard</h1>
+      <div>
+        <a href="profile.html" class="mr-4 hover:underline">Profile</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="container mx-auto mt-10 p-4">
+    <h1 class="text-4xl font-bold mb-6 text-center" id="Dashboard-title">Python Learning Dashboard</h1>
+    <p class="text-lg mb-6 text-center" id="Dashboard-description">Your centralized platform to master Python through interactive modules and real-time feedback.</p>
+
+    <!-- Python Dashboard Section -->
+    <section class="bg-gray-100 p-6 rounded-lg shadow-md mb-6">
+      <h2 class="text-2xl font-bold mb-4 text-center" id="learning-dashboard-title">Learning Progress Tracker</h2>
+      <div class="text-center mb-6">
+        <i class="fab fa-python text-purple-800 text-5xl mb-4" id="dashboard-icon"></i>
+        <p>Track your learning across Python topics and complete modules to earn rewards!</p>
+      </div>
+
+      <div class="flex justify-around mb-4 text-center">
+        <p class="font-bold">Points: <span id="points" class="text-purple-800">0</span></p>
+        <div class="relative pt-1 w-2/3">
+          <p>Progress:</p>
+          <div class="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
+            <div style="width:0%" id="progress-bar" class="bg-purple-800 shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level 1: Basic Python Concepts -->
+      <div id="level1" class="hidden bg-white p-4 rounded shadow-md mb-6">
+        <h3 class="text-xl font-bold mb-2">Module 1: Basic Python Concepts</h3>
+        <p class="mb-4">Complete the following tasks to earn 10 points and move to the next module:</p>
+        <ul class="list-disc pl-5">
+          <li><a href="GameP.html" class="text-purple-800 hover:underline" onclick="playGame1()">Interactive Learning on Python Basics</a></li>
+          <li><a href="pythoncheatsheet.html" class="text-purple-800 hover:underline">Python Basics (Quick Overview)</a></li>
+          <li><a href="https://pythontutor.com/visualize.html#mode=edit" id="launch-editor" class="text-purple-800 hover:underline">Launch Python Editor</a></li>
+          <li><a href="quizP.html" class="text-purple-800 hover:underline">Take Quiz</a></li>
+        </ul>
+      </div>
+
+      <!-- Text Editor and Buttons -->
+      <div id="editor-container" class="text-editor-container">
+        <h3 class="text-xl font-bold mb-4">Generate Python Code</h3>
+        <textarea id="query-editor" name="query-editor" class="w-full border rounded-lg p-2"></textarea>
+        <div class="flex justify-center gap-4 mt-4">
+          <button id="generate-query" class="bg-purple-800 text-white py-2 px-4 rounded hover:bg-purple-700">Generate Code</button>
+          <button id="launch-editor" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500">Launch Python Editor</button>
+        </div>
+      </div>
+
+      <!-- Additional Module Triggers -->
+      <div class="text-center">
+        <button class="bg-purple-800 text-white p-2 rounded hover:bg-purple-700" onclick="startLevel1()">Start Module 1: Basic Concepts</button>
+      </div>
+    </section>
+
+    <!-- Additional Feature Sections -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="bg-gray-100 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+        <h2 class="text-2xl font-bold mb-4">Custom Study Plans</h2>
+        <i class="fas fa-calendar-alt text-purple-800 text-4xl mb-4"></i>
+        <p>Get personalized study plans tailored to your learning style and pace.</p>
+        <a href="study-plan.html" class="text-purple-800 hover:underline">Explore Study Plans</a>
+      </div>
+
+      <div class="bg-gray-100 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+        <h2 class="text-2xl font-bold mb-4">Adaptive Learning Modules</h2>
+        <i class="fas fa-brain text-purple-800 text-4xl mb-4"></i>
+        <p>Modules that adapt based on your strengths and weaknesses.</p>
+        <a href="adaptive-learning.html" class="text-purple-800 hover:underline">Discover Adaptive Learning</a>
+      </div>
+
+      <div class="bg-gray-100 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+        <h2 class="text-2xl font-bold mb-4">Collaborative Study</h2>
+        <i class="fas fa-users text-purple-800 text-4xl mb-4"></i>
+        <p>Join live study sessions and collaborate with others in real time.</p>
+        <a href="chat.html" class="text-purple-800 hover:underline">Start Collaborating</a>
+      </div>
+
+      <div class="bg-gray-100 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+        <h2 class="text-2xl font-bold mb-4">Voice Interaction with AI</h2>
+        <i class="fas fa-microphone text-purple-800 text-4xl mb-4"></i>
+        <p>Interact with your study assistant using voice commands.</p>
+        <a href="SpchText.html" class="bg-purple-800 text-white p-2 rounded hover:bg-purple-700 inline-block">Start Voice Interaction</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-4 mt-10">
+    <div class="mx-auto text-center">
+      <p>&copy; 2024 Python Learning. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
+  <script>
+    let points = 0;
+
+    // Initialize CodeMirror editor
+    var editor = CodeMirror.fromTextArea(document.getElementById('query-editor'), {
+      mode: 'text/x-python',
+      lineNumbers: true,
+      theme: 'default'
+    });
+
+    // Function to update the progress bar
+    function updateProgressBar(percentage) {
+      document.getElementById('progress-bar').style.width = percentage + '%';
+    }
+
+    // Function to start Level 1
+    function startLevel1() {
+      document.getElementById("level1").classList.remove("hidden");
+      updateProgressBar(10); // Initial progress update for Level 1
+      document.getElementById("points").innerHTML = points;
+    }
+
+    // Function to play Python Basics game
+    function playGame1() {
+      window.location.href = 'GameP1.html';
+    }
+
+    // Function to show the editor
+    function showEditor() {
+      document.getElementById('editor-container').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

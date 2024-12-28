@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Snake Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f3e5f5; /* Light purple background to match index.html */
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #6a1b9a; /* Darker purple color for the title */
+        }
+
+        canvas {
+            background-color: #e1bee7; /* Slightly darker purple for canvas */
+            display: block;
+            margin: 20px auto;
+            border: 2px solid #6a1b9a; /* Dark purple border */
+        }
+
+        #status {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #6a1b9a; /* Dark purple color for status */
+        }
+
+        #score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6a1b9a; /* Dark purple color for score */
+        }
+
+        #legend {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 20px auto;
+            width: 300px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #legend h3 {
+            margin-top: 0;
+            color: #6a1b9a; /* Dark purple color for legend title */
+        }
+
+        #legend p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #6a1b9a; /* Dark purple color for legend text */
+        }
+    </style>
+</head>
+<body>
+    <h1>SQL Snake Game</h1>
+    <p>Eat the SQL keywords in order: <b>SELECT</b> <b>*</b> <b>FROM</b> <b>table_name</b></p>
+    <div id="legend">
+        <h3>Legend</h3>
+        <p><b>SELECT</b>: Square</p>
+        <p><b>*</b>: Star</p>
+        <p><b>FROM</b>: Circle</p>
+        <p><b>table_name</b>: Diamond</p>
+    </div>
+    <canvas id="gameCanvas"></canvas>
+    <p id="status"></p>
+    <p>Score: <span id="score">0</span></p>
+    <p>Eaten Keywords: <span id="keywords"></span></p>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = 400;
+        canvas.height = 400;
+
+        const boxSize = 20;
+        const snake = [{ x: 160, y: 160 }]; // Snake starting position
+        let direction = "RIGHT";
+        let score = 0;  // Set initial score to zero
+        let eatenKeywords = ""; // Store eaten keywords
+
+        const foods = [
+            { keyword: "SELECT", x: 200, y: 200 },
+            { keyword: "*", x: 100, y: 100 },
+            { keyword: "FROM", x: 300, y: 100 },
+            { keyword: "table_name", x: 200, y: 300 }
+        ];
+
+        let currentFoodIndex = 0;
+        let currentFood = foods[currentFoodIndex];
+
+        // Control snake direction with arrow keys
+        document.addEventListener("keydown", event => {
+            if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+            if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+            if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+            if (event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+        });
+
+        function drawSnake() {
+            snake.forEach(part => {
+                ctx.fillStyle = "green";
+                ctx.fillRect(part.x, part.y, boxSize, boxSize);
+                ctx.strokeStyle = "darkgreen";
+                ctx.strokeRect(part.x, part.y, boxSize, boxSize);
+            });
+        }
+
+        function moveSnake() {
+            let head = { ...snake[0] };
+
+            if (direction === "UP") head.y -= boxSize;
+            if (direction === "DOWN") head.y += boxSize;
+            if (direction === "LEFT") head.x -= boxSize;
+            if (direction === "RIGHT") head.x += boxSize;
+
+            snake.unshift(head); // Add new head to the snake
+            snake.pop();         // Remove the tail (move forward)
+        }
+
+        function drawShape(x, y, keyword) {
+            ctx.save();
+            ctx.translate(x + boxSize / 2, y + boxSize / 2); // Move origin to center
+            ctx.strokeStyle = "blue";
+            ctx.lineWidth = 3;
+            switch (keyword) {
+                case "*":
+                    ctx.beginPath();
+                    ctx.moveTo(0, -boxSize / 2);
+                    ctx.lineTo(boxSize / 2, 0);
+                    ctx.lineTo(0, boxSize / 2);
+                    ctx.lineTo(-boxSize / 2, 0);
+                    ctx.closePath();
+                    ctx.stroke();
+                    break;
+                case "SELECT":
+                    ctx.beginPath();
+                    ctx.rect(-boxSize / 2, -boxSize / 2, boxSize, boxSize);
+                    ctx.stroke();
+                    break;
+                case "FROM":
+                    ctx.beginPath();
+                    ctx.arc(0, 0, boxSize / 2, 0, Math.PI * 2);
+                    ctx.stroke();
+                    break;
+                case "table_name":
+                    ctx.strokeStyle = "purple";
+                    ctx.beginPath();
+                    ctx.moveTo(-boxSize / 2, -boxSize / 2);
+                    ctx.lineTo(boxSize / 2, -boxSize / 2);
+                    ctx.lineTo(boxSize / 4, boxSize / 2);
+                    ctx.lineTo(-boxSize / 4, boxSize / 2);
+                    ctx.closePath();
+                    ctx.stroke();
+                    break;
+            }
+            ctx.restore();
+        }
+
+        function drawFood() {
+            drawShape(currentFood.x, currentFood.y, currentFood.keyword);
+        }
+
+        function checkCollision() {
+            // If the snake eats the food
+            if (snake[0].x === currentFood.x && snake[0].y === currentFood.y) {
+                // Display the eaten keyword at the bottom of the screen
+                eatenKeywords += currentFood.keyword + " ";
+                document.getElementById("keywords").innerText = eatenKeywords.trim();
+
+                // Move to next food in the sequence
+                currentFoodIndex++;
+                if (currentFoodIndex < foods.length) {
+                    currentFood = foods[currentFoodIndex];
+                    snake.push({}); // Grow the snake
+                } else {
+                    // Only award 10 points when the entire game is complete
+                    score = 10;
+                    document.getElementById("score").innerText = score;
+                    document.getElementById("status").innerText = "You win! SQL command complete!";
+                    setTimeout(() => {
+                        window.location.href = 'index.html'; // Redirect to index.html after 5 seconds
+                    }, 3000);
+                    clearInterval(game);
+                }
+            }
+        }
+
+        function gameOver() {
+            // If the snake hits the wall or itself
+            if (
+                snake[0].x < 0 || snake[0].x >= canvas.width ||
+                snake[0].y < 0 || snake[0].y >= canvas.height ||
+                snake.slice(1).some(part => part.x === snake[0].x && part.y === snake[0].y)
+            ) {
+                clearInterval(game);
+                document.getElementById("status").innerText = "Game Over!";
+                setTimeout(() => {
+                    window.location.href = 'index.html'; // Redirect to index.html after 5 seconds
+                }, 3000);
+            }
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+
+            drawSnake();
+            moveSnake();
+            drawFood();
+            checkCollision();
+            gameOver();
+        }
+
+        const game = setInterval(gameLoop, 100); // Run the game loop every 100ms
+    </script>
+</body>
+</html>

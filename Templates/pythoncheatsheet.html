@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Cheat Sheet - AI Study Companion</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #7F00FF, #E100FF);
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #7F00FF;
+      border-bottom: 2px solid #7F00FF;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+    .code-block {
+      background: #f7f7f7;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: monospace;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-purple-600 to-pink-500 p-4">
+    <div class="mx-auto flex justify-between items-center">
+      <h1 class="text-lg font-bold">AI Study Companion</h1>
+      <div>
+        <a href="index.html" class="mr-4 hover:underline">Home</a>
+        <a href="profile.html" class="mr-4 hover:underline">Profile</a>
+        <a href="sqlcheatsheet.html" class="mr-4 hover:underline">SQL Cheat Sheet</a>
+        <a href="stackscheatsheet.html" class="mr-4 hover:underline">Stacks Cheat Sheet</a>
+        <a href="pythoncheatsheet.html" class="mr-4 hover:underline">Python Cheat Sheet</a>
+        <a href="login.html" class="hover:underline">Sign Out</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mt-10 p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center text-purple-600">Python Cheat Sheet</h1>
+    
+    <!-- Basic Syntax -->
+    <div class="section">
+      <h2 class="section-title">Basic Syntax</h2>
+      <div class="code-block">
+        <p><strong>Print:</strong></p>
+        <code>print("Hello, World!")</code>
+        <p><strong>Variables:</strong></p>
+        <code>x = 10<br>name = "Alice"</code>
+        <p><strong>Lists:</strong></p>
+        <code>my_list = [1, 2, 3, 4]</code>
+        <p><strong>Dictionaries:</strong></p>
+        <code>my_dict = {"key": "value"}</code>
+      </div>
+    </div>
+    
+    <!-- Control Structures -->
+    <div class="section">
+      <h2 class="section-title">Control Structures</h2>
+      <div class="code-block">
+        <p><strong>If Statement:</strong></p>
+        <code>
+          if x > 10:<br>
+            &nbsp;&nbsp;print("x is greater than 10")<br>
+          elif x == 10:<br>
+            &nbsp;&nbsp;print("x is 10")<br>
+          else:<br>
+            &nbsp;&nbsp;print("x is less than 10")<br>
+        </code>
+        <p><strong>For Loop:</strong></p>
+        <code>
+          for i in range(5):<br>
+            &nbsp;&nbsp;print(i)<br>
+        </code>
+        <p><strong>While Loop:</strong></p>
+        <code>
+          while x > 0:<br>
+            &nbsp;&nbsp;print(x)<br>
+            &nbsp;&nbsp;x -= 1<br>
+        </code>
+      </div>
+    </div>
+    
+    <!-- Functions -->
+    <div class="section">
+      <h2 class="section-title">Functions</h2>
+      <div class="code-block">
+        <p><strong>Function Definition:</strong></p>
+        <code>
+          def greet(name):<br>
+            &nbsp;&nbsp;return f"Hello, {name}"<br>
+        </code>
+        <p><strong>Lambda Functions:</strong></p>
+        <code>
+          square = lambda x: x ** 2<br>
+          print(square(5))  # Output: 25<br>
+        </code>
+      </div>
+    </div>
+    
+    <!-- Common Libraries -->
+    <div class="section">
+      <h2 class="section-title">Common Libraries</h2>
+      <div class="code-block">
+        <p><strong>Math Library:</strong></p>
+        <code>
+          import math<br>
+          print(math.sqrt(16))  # Output: 4.0<br>
+        </code>
+        <p><strong>Datetime Library:</strong></p>
+        <code>
+          from datetime import datetime<br>
+          now = datetime.now()<br>
+          print(now)<br>
+        </code>
+      </div>
+    </div>
+    
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-purple-600 to-pink-500 p-4 mt-10">
+    <div class="mx-auto text-center">
+      <p>&copy; 2024 AI Study Companion. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
